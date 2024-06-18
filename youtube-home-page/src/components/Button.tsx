@@ -1,4 +1,5 @@
-import { cva } from "class-variance-authority"
+import { VariantProps, cva } from "class-variance-authority"
+import { ComponentProps } from "react"
 const buttonStyles = cva([ "transition-colors"], {
     variants: {
         variant: {
@@ -15,11 +16,17 @@ const buttonStyles = cva([ "transition-colors"], {
                 "p-2.5",
             ],
         }
+    },
+    defaultVariants: {
+        variant: "default",
+        size: "default",
     }
 })
 
 // const classes = buttonStyles({ size: "icon" })
 
-export function Button({ variant, size }: ButtonProps) {
-    return <Button className={buttonStyles({ variant, size })} />
+type ButtonProps = VariantProps<typeof buttonStyles> & ComponentProps<"button">
+
+export function Button({ variant, size, ...props }: ButtonProps) {
+    return <Button {...props} className={buttonStyles({ variant, size })} />
 }
